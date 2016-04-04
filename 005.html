@@ -11,7 +11,7 @@
 <body>
 <style type="text/css">
     #masthead .top-banner {
-        margin-top: -10px;
+        margin-top: 0px;
         background: black;
         padding: 5px, 5px;
         height: 55px;
@@ -35,11 +35,11 @@
     .bs-example {
         margin-bottom: 50px;
     }
-    #nav {
+   /* #nav {
         z-index: 99;
         width: 100%;
         position: relative;
-    }
+    }*/
 
 </style>
 
@@ -175,6 +175,7 @@
                 <div class="tab-content well pull-left">
                     <br />
                     <br />
+                    <h1>最新文章</h1>
                     <hr />
                     <ul class="tab-pane article-list with-img active" id="main-articals">
                         <li class="articals">
@@ -337,6 +338,13 @@
 width:300px;
 height:300px;
 }
+    .fix-it {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 99;
+        left: 0;
+        opacity: 0.95;
 </style>
 <!-- Bootstrap core JavaScript
 ================================================== -->
@@ -344,42 +352,31 @@ height:300px;
 <script src="jquery.min.js"></script>
 <script src="bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
 <script >
-    (function($) {
 
-        $.fn.smartFloat = function() {
-            var position = function(element) {
-                var top = element.position().top, pos = element.css("position");
-                $(window).scroll(function() {
-                    var scrolls = $(this).scrollTop();
-                    if (scrolls > top) {
-                        if (window.XMLHttpRequest) {
-                            element.css({
-                                position: "fixed",
-                                top: "-1px"
-                            });
-                        } else {
-                            element.css({
-                                top: scrolls
-                            });
-                        }
-                    }else {
-                        element.css({
-                            position: "relative",
-                            top: top
-                        });
-                    }
-                });
-            };
-            return $(this).each(function() {
-                position($(this));
-            });
-        };
-        
-    })(jQuery);
+   (function(window, $j) {
 
+       var showStickyHeader = false;
+       var sticky_height = 70;
+       if (window.innerWidth <= 800) {
+           sticky_height = 30;
+       }
+       $j(window).scroll(function() {
+           if ($j(window).scrollTop() >= sticky_height && !showStickyHeader) {
+               showStickyHeader = true;
+               $('#nav').addClass('fix-it');
+
+           }
+           if ($j(window).scrollTop() < sticky_height && showStickyHeader) {
+               showStickyHeader = false;
+               $('#nav').removeClass('fix-it');
+
+           }
+       });
+
+   })(window, jQuery);
 
     $(document).ready(function(){
-        $("#nav").smartFloat();
+
 		$('.fagagg43y').mouseout(function(){
             $('.fagagg43y').attr("class","fagagg43y");
         });
