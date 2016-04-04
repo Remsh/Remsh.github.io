@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--//已成功-->
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+            $('.wn-gamehead-gameimg').mouseout(function(){
+            $('.wn-gamehead-gameimg').attr("class","wn-gamehead-gameimg");
+        });
+        $('.wn-gamehead-gameimg').mouseover(function(){
+            $('.wn-gamehead-gameimg').attr("class","wn-gamehead-gameimg current");
+        });
+    });
+</script>
+<div id="j-wn-gamehead">
+    <div class="wn-gamehead">
+        <div class="wn-gamehead-contain">
+            <div id="j-wn-gamehead-gameimg" class="wn-gamehead-gameimg">
+                <div class="wn-gamehead-gamesmallimg"><img
+                        src="http://att1.niucdn.com/woniu.com/2016/0328/edf63ee85dcb315225772754ed428bc04b00ee5c.jpeg">
+                </div>
+                <div class="wn-gamehead-gamebigimg"><a href="http://tt2.woniu.com/static/act/201603/recruit/index.html"
+                                                       target="_blank"><img
+                        src="http://att1.niucdn.com/woniu.com/2016/0328/aea4f561787386f77a86549bd79b7fb7ea5394ee.jpeg"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+
+
+.wn-gamehead-gamesmallimg{
+  position: absolute;
+  margin-left: 120px;
+  width: 380px;
+  height: 55px;
+  overflow: hidden;
+}
+.wn-gamehead-gamebigimg{
+  width: 1000px;
+  overflow: hidden;
+  display: none;
+}
+.wn-gamehead-gamebigimg img{
+  border: none;
+}
+.wn-gamehead-gameimg.current{
+  height: auto;
+}
+.wn-gamehead-gameimg.current .wn-gamehead-gamesmallimg{
+  display: none;
+}
+.wn-gamehead-gameimg.current .wn-gamehead-gamebigimg{
+  display: block;
+}
+</style>
+
+</body>
+</html>

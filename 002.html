@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>syntaxhighlighter使用与normalize.css阅读</title>
+    <script type="text/javascript" src="scripts/shCore.js"></script>
+    <script type="text/javascript" src="scripts/shBrushJScript.js"></script>
+    <script type="text/javascript" src="scripts/shBrushCss.js"></script>
+    <link type="text/css" rel="stylesheet" href="styles/shcommon.css"/>
+    <script type="text/javascript">SyntaxHighlighter.all();</script>
+</head>
+<body>
+<link rel="stylesheet" type="text/css" href="normalize.css"/>
+
+<style type="text/css">
+
+    .header {
+        position: fixed;
+        z-index: 9;
+        background-color: #fff;
+        width: 100%;
+        top: 0;
+        display: block;
+        height: 35px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+    }
+
+    ol{
+        left: 900px;
+        top:280px;
+        z-index: 18;
+    }
+    .aside {
+        top: 45px;
+        display: block;
+        background-color: rgba(173, 218, 255, 0.16);
+        position: fixed;
+        z-index: 2;
+        width: 255px;
+        padding-left: 0px;
+        bottom: 30px;
+    }
+    .main {
+        padding: 10px 10px;
+        width: 670px;
+        background-color: rgba(104, 216, 255, 0.13);
+        position: relative;
+        left: 315px;
+        top: 50px;
+    }
+
+    .footer {
+        z-index: 8;
+        width: 100%;
+        font-size: 14px;
+        color: #333;
+        padding-top: 30px;
+    }
+    .li1 {
+        float: left;
+        display: block;
+        position: relative;
+        list-style: none;
+    }
+
+    a:link {
+        padding-left: 0;
+        padding-right: 0;
+        padding-top: 10px;
+        padding-bottom: 20px;
+        line-height: 20px;
+        text-decoration: none;
+        color: #333;
+    }
+
+    @media screen and (max-width: 1150px) { /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
+        .rightdiv {
+            display: none;
+        }
+    }
+
+
+    a .text {
+        padding-left: 15px;
+        border-left: 1px solid #e1e6eb;
+        border-right: 1px solid #e1e6eb;
+        text-decoration: none;
+    }
+
+    span.text {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+    .logo {
+        margin-left:0;
+        background-color: #5bc0de;
+    }
+    .li2 {
+
+        position: relative;
+        text-align: -webkit-match-parent;
+        list-style: none;
+        display: block;
+    }
+    .link2 {
+        font-size: 20px;
+        position: relative;
+        display: block;
+        list-style: none;
+        margin-bottom: 0;
+    }
+    .weixin-drop {
+        display: none;
+        position: fixed;
+        left: 140px;
+        top: 460px;
+        border: 1px solid #e6e6e6;
+        background: #FFF;
+        z-index: 18;
+        height: 170px;
+        width: 170px;
+        padding: 13px 13px 13px 13px;
+    }
+
+
+    .navbar-left:hover div.weixin-drop {
+        display: block;
+    }
+    ul.navbar-left{
+        margin-left: 10px;
+        padding-left: 25px;
+        padding-right: 30px;
+    }
+    ul.navbar-top{
+        padding: 5px;
+    }
+    *{margin:0;padding:0;list-style:none;}
+    #flash{width: 530px;height: 354px;margin:50px 5px;position: relative;cursor: pointer;}
+    #pic li{position: absolute;top: 0;left: 0;z-index: 1;display: none;}
+    #num{position: absolute;left: 40%;bottom: 10px;z-index: 2;cursor:default;}
+    #num li{float: left;width: 20px;height: 20px;border-radius: 50%;background: #666;margin: 3px;line-height: 20px;text-align: center;color: #fff;cursor: pointer;}
+    #num li.active{background: #f00;}
+    .arrow{height: 60px;width: 30px;line-height: 60px;text-align: center;display: block;position: absolute;top:45%;background-color: rgba(0,0,0,0.3);z-index: 3;display: none;}
+    .arrow:hover{background: rgba(0,0,0,0.7);}
+    #flash:hover .arrow{display: block;}
+    #left{left: 2%;}
+    #right{right: 2%;}
+
+
+
+    .row{
+        display: block;
+        padding-left: 64px;
+        height: 36px;
+    } .label{
+          position: absolute;
+          margin-left: -64px;
+          line-height: 30px;
+          font-size: 13px;
+          color: #333;
+          font-family: "Microsoft Yahei";
+      } .label.smcodetitle{
+            margin-left: -77px;
+        } .collection{
+              position: relative;
+              height: 36px;
+          } .collection input{
+                margin: 0;
+                border: solid 1px #cdcdcd;
+                padding: 6px;
+                width: 182px;
+                height: 16px;
+                line-height: 16px;
+                color: #999;
+                border-radius: 3px;
+            }
+    .mobileValidateCode input{
+        width: 76px;
+    } .getMobileValidateCode{
+          position: absolute;
+          margin-left: 96px;
+          width: 100px;
+          height: 30px;
+          line-height: 30px;
+          text-align: center;
+          background-color: #933;
+          color: #fff;
+          border: none;
+          border-radius: 3px;
+          cursor: pointer;
+          font-style: normal;
+      }
+    .inputDefault, .msgContainer{
+        position: absolute;
+        top: 0;
+        left: 0;
+    } .collection .inputDefault, .collection {
+          color: #000;
+      } .collection .msgError{
+            border-color: #f00;
+            color: #f00;
+        }
+    #captchaDiv{
+        float: left;
+        width: 76px;
+        margin-right: 10px;
+    } #captchaDiv input{
+          width: 60px;
+      } .captchaimg{
+            float: left;
+            margin-right: 10px;
+        } .captchaimg .cptimg{
+              cursor: pointer;
+          }
+    .collection {
+        width: 76px;
+    } .verifyCode{
+          position: absolute;
+          right: 20px;
+          top: 4px;
+      }
+
+    } .agree input{
+          margin: 0;
+          vertical-align: middle;
+      } .agree a{
+            color: #ff5656;
+            text-decoration: none;
+        }
+
+</style>
+
+<div class="header">
+    <ul class="nav navbar-top">
+        <li class="li1"><a class="link" href="javascript:void(0)"><span class="text"></span>首页</a></li>
+        <li class="li1"><a class="link" href="javascript:void(0)"><span class="text">css</span></a></li>
+        <li class="li1"><a class="link" href="javascript:void(0)"><span class="text">Javascript</span></a></li>
+        <li class="li1"><a class="link" href="javascript:void(0)"><span class="text">日历</span></a></li>
+    </ul>
+</div>
+
+
+<div class="aside">
+    <h1 class="logo"><img src="img/logo.gif" width="150" height="250" alt="素还真"></h1>
+    <ul class="nav navbar-left">
+        <li class="li2"><a class="link2" href="javascript:void(0)">关于</a></li>
+        <li class="li2"><a class="link2" href="javascript:void(0)">统计</a></li>
+        <li class="li2"><a class="link2" href="javascript:void(0)">留言</a></li>
+        <li class="li2"><b id="weixin" class="link2" href="javascript:void(0)">微信</b>
+            <div class="weixin-drop">
+                <img height="160px" width="160px" alt="" class="hover-qrcode" src="img/hover-qrcode.png">
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div class="main">
+    <article>
+        <h1 class="article-title">syntaxhighlighter使用与normalize.css阅读</h1>
+    <p>写上一篇的时候尚不知道sh高亮，以致代码块极为原始。现在来用用syntaxhighlighter</p>
+        <a>看下面一段代码：</a>
+        <pre class="brush: js;">
+            fieldset {
+            padding: .35em .625em .75em;
+            margin: 0 2px;
+            border: 1px solid #c0c0c0;
+            }
+            legend {
+            padding: 0;
+            border: 0;
+            }
+            </pre>
+        <a>这表示：表单分组标题的内添充为上 .23em，下 .75em， 左右 .625em。外边距为上下0，左右2px，边框为#c0c0c0、实心的1px宽。
+
+                      分组标题的内添充为0，边框为0。
+        </a>
+        <p>这样子代码看起来确实舒服很多啊。继续看看代码</p>
+         <pre class="brush: js;">
+            textarea {
+            overflow: auto;
+            }
+             optgroup {
+             font-weight: bold;
+            }
+            </pre>
+        <p>多行文本框在需要滚动条的时候再显示,选项组的字体样式为加粗。</p>
+
+         <pre class="brush: js;">
+            table {
+            border-spacing: 0;
+            border-collapse: collapse;
+            }
+            td,
+            th {
+             padding: 0;
+            }
+            </pre>
+        <p>表格table标签的相距单元的边框之间的距离为0，并且合并。单元格、标题行的单元格的内添充为0.
+
+            可以设置2个值，第1个为左右，第2个为上下。如果想继承自父容器则设为inherit
+
+            border-collapse是说如何处理相临单元格之间的边框样式。这里设置的是合并。
+
+            有3个值可选。</p>
+        <pre class="brush: js;">
+          * {
+             color: #000 !important;
+            text-shadow: none !important;
+            background: transparent !important;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+           }
+            </pre>
+        <p>全局设定，字体颜色黑，清除字体及盒标签的阴影，背景透明。
+
+            ！important，设置为最高优先级，覆盖同类型的样式设置。</p>
+        <pre class="brush: js;">
+           a,a:visited {
+              text-decoration: underline;
+            }
+             a[href]:after {
+                 content: " (" attr(href) ")";
+            }
+             abbr[title]:after {
+             content: " (" attr(title) ")";
+            }
+             a[href^="javascript:"]:after,
+             a[href^="#"]:after {
+             content: "";
+             }
+            </pre>
+            <p>1、链接的默认及访问过的样式为加上下划线。</p>
+
+            <p>2、链接的href属性内容后面加上属性href的值，举例子：</p>
+            <pre class="brush: js;"><a href="www.baidu.com">百度</a>，实际的显示内容为 百度(www.baidu.com)</pre>
+            <p>3、链接的title属性的内容后面加上属性title的值。</p>
+
+            <p>4、如果链接的href的值是以javascript和#开头的，那清除掉插入的任何值，以免调用js及跳转锚点出错。</p>
+
+           <p> 5、缩写abbr的title属性的内容后面加上属性title的值。
+            content 属性与 :before 及 :after 伪元素配合使用，来插入生成内容。</p>
+
+
+
+
+    </article>
+</div>
+<style type="text/css">
+    .article-title {
+        padding: 10;
+        color: #000;
+        font-size: 26px;
+        font-weight: 700;
+        line-height: 1.5em;
+        padding-top:30px;
+        margin-bottom: 30px;
+        border-bottom: 1px dashed rgba(70, 92, 54, 0.39);
+        margin-before:0；
+    }
+    .main  p {
+        margin-top: 0px;
+        margin-bottom: 30px;
+        padding: 0;
+        font-size: 16px;
+        line-height: 1.75em;
+        font-family: Tahoma,"Microsoft YaHei","Hiragino Sans GB","WenQuanYi Micro Hei",sans-serif;
+    }
+
+    .main  a {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        padding: 0;
+        font-size: 15px;
+        line-height: 1.75em;
+        font-family: Tahoma,"Microsoft YaHei","Hiragino Sans GB","WenQuanYi Micro Hei",sans-serif;
+    }
+</style>
+
+
+
+<div class="footer"></div>
+
+</body>
+</html>

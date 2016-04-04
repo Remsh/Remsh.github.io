@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>syntaxhighlighter使用与normalize.css阅读</title>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="handlebars-v4.0.5.js"></script>
+    <script type="text/javascript" src="scripts/shCore.js"></script>
+    <script type="text/javascript" src="scripts/shBrushJScript.js"></script>
+    <script type="text/javascript" src="scripts/shBrushCss.js"></script>
+    <link type="text/css" rel="stylesheet" href="styles/shcommon.css"/>
+    <script type="text/javascript">SyntaxHighlighter.all();</script>
+
+
+</head>
+<body>
+<link rel="stylesheet" type="text/css" href="normalize.css"/>
+
+<style type="text/css">
+
+    .header {
+        position: fixed;
+        z-index: 9;
+        background-color: #fff;
+        width: 100%;
+        top: 0;
+        display: block;
+        height: 35px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+    }
+
+    ol{
+        left: 900px;
+        top:280px;
+        z-index: 18;
+    }
+    .aside {
+        top: 45px;
+        display: block;
+        background-color: rgba(173, 218, 255, 0.16);
+        position: fixed;
+        z-index: 2;
+        width: 255px;
+        padding-left: 0px;
+        bottom: 30px;
+    }
+    .main {
+        padding: 10px 10px;
+        width: 670px;
+        background-color: rgba(104, 216, 255, 0.13);
+        position: relative;
+        left: 315px;
+        top: 50px;
+    }
+
+    .footer {
+        z-index: 8;
+        width: 100%;
+        font-size: 14px;
+        color: #333;
+        padding-top: 30px;
+    }
+    .li1 {
+        float: left;
+        display: block;
+        position: relative;
+        list-style: none;
+    }
+
+    a:link {
+        padding-left: 0;
+        padding-right: 0;
+        padding-top: 10px;
+        padding-bottom: 20px;
+        line-height: 20px;
+        text-decoration: none;
+        color: #333;
+    }
+
+    @media screen and (max-width: 1150px) { /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
+        .rightdiv {
+            display: none;
+        }
+    }
+
+
+    a .text {
+        padding-left: 15px;
+        border-left: 1px solid #e1e6eb;
+        border-right: 1px solid #e1e6eb;
+        text-decoration: none;
+    }
+
+    span.text {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+    .logo {
+        margin-left:0;
+        background-color: #5bc0de;
+    }
+    .li2 {
+
+        position: relative;
+        text-align: -webkit-match-parent;
+        list-style: none;
+        display: block;
+    }
+    .link2 {
+        font-size: 20px;
+        position: relative;
+        display: block;
+        list-style: none;
+        margin-bottom: 0;
+    }
+    .weixin-drop {
+        display: none;
+        position: fixed;
+        left: 140px;
+        top: 460px;
+        border: 1px solid #e6e6e6;
+        background: #FFF;
+        z-index: 18;
+        height: 170px;
+        width: 170px;
+        padding: 13px 13px 13px 13px;
+    }
+
+
+    .navbar-left:hover div.weixin-drop {
+        display: block;
+    }
+    ul.navbar-left{
+        margin-left: 10px;
+        padding-left: 25px;
+        padding-right: 30px;
+    }
+    ul.navbar-top{
+        padding: 5px;
+    }
+    *{margin:0;padding:0;list-style:none;}
+    #flash{width: 530px;height: 354px;margin:50px 5px;position: relative;cursor: pointer;}
+    #pic li{position: absolute;top: 0;left: 0;z-index: 1;display: none;}
+    #num{position: absolute;left: 40%;bottom: 10px;z-index: 2;cursor:default;}
+    #num li{float: left;width: 20px;height: 20px;border-radius: 50%;background: #666;margin: 3px;line-height: 20px;text-align: center;color: #fff;cursor: pointer;}
+    #num li.active{background: #f00;}
+    .arrow{height: 60px;width: 30px;line-height: 60px;text-align: center;display: block;position: absolute;top:45%;background-color: rgba(0,0,0,0.3);z-index: 3;display: none;}
+    .arrow:hover{background: rgba(0,0,0,0.7);}
+    #flash:hover .arrow{display: block;}
+    #left{left: 2%;}
+    #right{right: 2%;}
+
+
+
+    .row{
+        display: block;
+        padding-left: 64px;
+        height: 36px;
+    } .label{
+          position: absolute;
+          margin-left: -64px;
+          line-height: 30px;
+          font-size: 13px;
+          color: #333;
+          font-family: "Microsoft Yahei";
+      } .label.smcodetitle{
+            margin-left: -77px;
+        } .collection{
+              position: relative;
+              height: 36px;
+          } .collection input{
+                margin: 0;
+                border: solid 1px #cdcdcd;
+                padding: 6px;
+                width: 182px;
+                height: 16px;
+                line-height: 16px;
+                color: #999;
+                border-radius: 3px;
+            }
+    .mobileValidateCode input{
+        width: 76px;
+    } .getMobileValidateCode{
+          position: absolute;
+          margin-left: 96px;
+          width: 100px;
+          height: 30px;
+          line-height: 30px;
+          text-align: center;
+          background-color: #933;
+          color: #fff;
+          border: none;
+          border-radius: 3px;
+          cursor: pointer;
+          font-style: normal;
+      }
+    .inputDefault, .msgContainer{
+        position: absolute;
+        top: 0;
+        left: 0;
+    } .collection .inputDefault, .collection {
+          color: #000;
+      } .collection .msgError{
+            border-color: #f00;
+            color: #f00;
+        }
+    #captchaDiv{
+        float: left;
+        width: 76px;
+        margin-right: 10px;
+    } #captchaDiv input{
+          width: 60px;
+      } .captchaimg{
+            float: left;
+            margin-right: 10px;
+        } .captchaimg .cptimg{
+              cursor: pointer;
+          }
+    .collection {
+        width: 76px;
+    } .verifyCode{
+          position: absolute;
+          right: 20px;
+          top: 4px;
+      }
+
+    } .agree input{
+          margin: 0;
+          vertical-align: middle;
+      } .agree a{
+            color: #ff5656;
+            text-decoration: none;
+        }
+
+</style>
+
+<div class="header">
+    <ul class="nav navbar-top">
+        <li class="li1"><a class="link" href="javascript:void(0)"><span class="text"></span>首页</a></li>
+        <li class="li1"><a class="link" href="javascript:void(0)"><span class="text">css</span></a></li>
+        <li class="li1"><a class="link" href="javascript:void(0)"><span class="text">Javascript</span></a></li>
+        <li class="li1"><a class="link" href="javascript:void(0)"><span class="text">日历</span></a></li>
+    </ul>
+</div>
+
+
+<div class="aside">
+    <h1 class="logo"><img src="img/logo.gif" width="150" height="250" alt="素还真"></h1>
+    <ul class="nav navbar-left">
+        <li class="li2"><a class="link2" href="javascript:void(0)">关于</a></li>
+        <li class="li2"><a class="link2" href="javascript:void(0)">统计</a></li>
+        <li class="li2"><a class="link2" href="javascript:void(0)">留言</a></li>
+        <li class="li2"><b id="weixin" class="link2" href="javascript:void(0)">微信</b>
+            <div class="weixin-drop">
+                <img height="160px" width="160px" alt="" class="hover-qrcode" src="img/hover-qrcode.png">
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div class="main">
+    <article>
+        <h1 class="article-title">handlebars.JS的一些简单事例</h1>
+
+        <p>
+            目前handlebars.JS已经被许多项目广泛使用了，handlebars是一个纯js库，可以像使用其他JS脚本一样用script标签来包含handlebars.js
+
+        </p>
+        <p>基本语法:</p>
+        <p><b>一、 Handlebars expressions</b><br />
+            Handlebars expressions 是handlebars模板中最基本的单元，使用方法是加两个花括号{{value}}, handlebars模板会自动匹配相应的数值，对象甚至是函数。
+
+
+            你可以单独建立一个模板,ID（或者class）和type很重要，因为你要用他们来获取模板内容
+            例如：</p>
+
+        <pre class="brush: js;">
+           <script id="tpl" type="text/x-handlebars-template">
+               <div class="demo">
+                   <h1>{{title}}</h1>
+                   <p>{{content}}</p>
+               </div>
+           </script>
+            </pre>
+        <p>handlebars会根据上下文来自动对表达式进行匹配，如果匹配项是个变量，则会输出变量的值，如果匹配项是个函数，则函数会被调用。
+
+            如果没找到匹配项，则没有输出。表达式也支持点操作符，因此你可以使用{{content.title}}这样的形式来调用嵌套的值或者方法，
+            handlebars会根据当前上下文输出content变量的title属性的值。在JavaScript中，使用Handlebars.compile()方法来预编译模板.</p>
+        <p>	使用的一般步骤：</p>
+         <pre class="brush: js;">
+           //用jquery获取模板源
+           var source   =  $("#tpl").html();
+          //模拟json数据，一般从ajax或者input中取得
+	       var context = { title: "zhaoshuai", content: "learn Handlebars"};
+	      //预编译模板生成template
+          var template = Handlebars.compile(source );
+          //数据+模板=新的html
+	      var html = template(context);
+	      //插入网页
+	      $('#ltpl').html(html);
+            </pre>
+        <p><b>二、Handlebar的表达式</b></p>
+<p>Block表达式
+
+    有时候当你需要对某条表达式进行更深入的操作时，Blocks就派上用场了，在Handlebars中，你可以在表达式后面跟随一个#号来表示Blocks，然后通过{{/表达式}}来结束Blocks。
+    如果当前的表达式是一个数组，则Handlebars会“自动展开数组”，并将Blocks的上下文设为数组中的元素。
+    例如：</p>
+         <pre class="brush: js;">
+           <ul>
+               {{#programme}}
+               <li>{{language}}</li>
+               {{/programme}}
+           </ul>
+
+
+            //有以下JSON数据
+            {
+                programme: [
+                   {language: "JavaScript"},
+                   {language: "HTML"},
+                   {language: "CSS"}
+                ]
+             }
+
+            </pre>
+        <p>编译模板代码同上……
+            上面的代码会自动匹配programme数据并展开数据，渲染DOM后就是这样的
+        </p>
+        <pre class="brush: js;">
+          <ul>
+              <li>JavaScript</li>
+              <li>HTML</li>
+              <li>CSS</li>
+          </ul>
+            </pre>
+        <p><b>三、Handlebars的内置块表达式（Block helper）</b></p>
+        <p>1.each block helper<br />
+            可以使用内置的{{#each}} helper遍历列表块内容，用this来引用遍历的元素，
+            例如：</p>
+
+        <pre class="brush: js;">
+          <ul>
+              {{#each name}}
+              <li>{{this}}</li>
+              {{/each}}
+          </ul>
+
+           // 对应适用的json数据
+            {
+                 name: ["html","css","javascript"]
+            };
+
+        </pre>
+        <p>这里的this指的是数组里的每一项元素，和上面的Block很像，但原理是不一样的这里的name是数组，而内置的each就是为了遍历数组用的，更复杂的数据也同样适用。</p>
+
+        <p>	2.多重嵌套循环<br />
+
+            这里有一个全国各省、直辖市的地名与邮编的数组zone，还有一个区域划分的数组catZone。</p>
+        <pre class="brush: js;">
+
+         var zone = [{"label":"北京","code":110000},
+        {"label":"天津","code":120000},
+        {"label":"河北","code":130000},
+        {"label":"山西","code":140000},
+        {"label":"内蒙古","code":150000},
+        {"label":"辽宁","code":210000},
+        {"label":"吉林","code":220000},
+        {"label":"黑龙江","code":230000},
+        {"label":"上海","code":310000},
+        {"label":"江苏","code":320000},
+        {"label":"浙江","code":330000},
+        {"label":"安徽","code":340000},
+        {"label":"福建","code":350000},
+        {"label":"江西","code":360000},
+        {"label":"山东","code":370000},
+        {"label":"河南","code":410000},
+        {"label":"湖北","code":420000},
+        {"label":"湖南","code":430000},
+        {"label":"广东","code":440000},
+        {"label":"广西","code":450000},
+        {"label":"海南","code":460000},
+        {"label":"重庆","code":500000},
+        {"label":"四川","code":510000},
+        {"label":"贵州","code":520000},
+        {"label":"云南","code":530000},
+        {"label":"西藏","code":540000},
+        {"label":"陕西","code":610000},
+        {"label":"甘肃","code":620000},
+        {"label":"青海","code":630000},
+        {"label":"宁夏","code":640000},
+        {"label":"新疆","code":650000},
+        {"label":"台湾","code":710000},
+        {"label":"香港","code":810000},
+        {"label":"澳门","code":820000}
+        ];
+     var catZone = [{'label':"江浙沪",'code':[310000,320000,330000]},
+             {'label':"华东",'code':[340000,360000]},
+             {'label':"华北",'code':[110000,120000,130000,140000,150000]},
+             {'label':"华中",'code':[410000,420000,430000]},
+             {'label':"华南",'code':[350000,440000,450000,460000]},
+             {'label':"东北",'code':[210000,220000,230000]},
+             {'label':"西北",'code':[610000,620000,630000,640000,650000]},
+             {'label':"西南",'code':[500000,510000,520000,530000,540000]},
+             {'label':"港澳台",'code':[810000,820000,710000]}
+    ];
+    var data = {zone:zone,catZone:catZone};
+        </pre>
+
+<p>现在希望将各个地名按区域做成表格，首先，需要循环catZone，拿出其中的code数组并进行第二个，然后去zone数组中去找code为当前code的地名，
+    但code并不是索引，无法直接得到，所以继续循环遍历zone（此时 ../../zone 为data中的zone），比较zone中code与第二个each循环中code（../this 指向上层的this）是否相等。</p>
+        <pre class="brush: js;">
+                <table class="table table-bordered">
+                    {{! 第一个each循环}}
+                    {{#each catZone}}
+                    <tr>
+                        <th><label><input type="checkbox" />{{label}}</label></th>
+                        <td>
+                            {{! 第二个each循环}}
+                            {{#each code}}
+                            {{! 第三个each循环}}
+                            {{#each ../../zone}}
+                            {{! equal为自定义helper，比较两个参数是否相等，否则options.inverse}}
+                            {{#equal code ../this}}
+                            <label class='pull-left'><input type="checkbox" data-code="{{code}}"/>
+                                {{label}}
+                            </label>
+                            {{/equal}}
+                            {{/each}}
+                            {{/each}}
+                        </td>
+                    </tr>
+                    {{/each}}
+                </table>
+        </pre>
+
+        <p>最终效果如下：</p>
+
+        <table class="table table-bordered">
+            <tbody><tr>
+                <th><label><input type="checkbox">江浙沪</label></th>
+                <td>
+                    <label class="pull-left"><input type="checkbox" data-code="310000">
+                        上海
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="320000">
+                        江苏
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="330000">
+                        浙江
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <th><label><input type="checkbox">华东</label></th>
+                <td>
+                    <label class="pull-left"><input type="checkbox" data-code="340000">
+                        安徽
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="360000">
+                        江西
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <th><label><input type="checkbox">华北</label></th>
+                <td>
+                    <label class="pull-left"><input type="checkbox" data-code="110000">
+                        北京
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="120000">
+                        天津
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="130000">
+                        河北
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="140000">
+                        山西
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="150000">
+                        内蒙古
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <th><label><input type="checkbox">华中</label></th>
+                <td>
+                    <label class="pull-left"><input type="checkbox" data-code="410000">
+                        河南
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="420000">
+                        湖北
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="430000">
+                        湖南
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <th><label><input type="checkbox">华南</label></th>
+                <td>
+                    <label class="pull-left"><input type="checkbox" data-code="350000">
+                        福建
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="440000">
+                        广东
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="450000">
+                        广西
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="460000">
+                        海南
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <th><label><input type="checkbox">东北</label></th>
+                <td>
+                    <label class="pull-left"><input type="checkbox" data-code="210000">
+                        辽宁
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="220000">
+                        吉林
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="230000">
+                        黑龙江
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <th><label><input type="checkbox">西北</label></th>
+                <td>
+                    <label class="pull-left"><input type="checkbox" data-code="610000">
+                        陕西
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="620000">
+                        甘肃
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="630000">
+                        青海
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="640000">
+                        宁夏
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="650000">
+                        新疆
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <th><label><input type="checkbox">西南</label></th>
+                <td>
+                    <label class="pull-left"><input type="checkbox" data-code="500000">
+                        重庆
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="510000">
+                        四川
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="520000">
+                        贵州
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="530000">
+                        云南
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="540000">
+                        西藏
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <th><label><input type="checkbox">港澳台</label></th>
+                <td>
+                    <label class="pull-left"><input type="checkbox" data-code="810000">
+                        香港
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="820000">
+                        澳门
+                    </label>
+                    <label class="pull-left"><input type="checkbox" data-code="710000">
+                        台湾
+                    </label>
+                </td>
+            </tr>
+            </tbody></table>
+        <br />
+        <br />
+        <br />
+        <br />
+
+
+
+
+
+
+
+    </article>
+</div>
+<style type="text/css">
+    .article-title {
+        padding: 10;
+        color: #000;
+        font-size: 26px;
+        font-weight: 700;
+        line-height: 1.5em;
+        padding-top:30px;
+        margin-bottom: 30px;
+        border-bottom: 1px dashed rgba(70, 92, 54, 0.39);
+        margin-before:0；
+    }
+    .main  p {
+        margin-top: 0px;
+        margin-bottom: 30px;
+        padding: 0;
+        font-size: 16px;
+        line-height: 1.75em;
+        font-family: Tahoma,"Microsoft YaHei","Hiragino Sans GB","WenQuanYi Micro Hei",sans-serif;
+    }
+
+    .main  a {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        padding: 0;
+        font-size: 15px;
+        line-height: 1.75em;
+        font-family: Tahoma,"Microsoft YaHei","Hiragino Sans GB","WenQuanYi Micro Hei",sans-serif;
+    }
+
+</style>
+
+<div class="footer"></div>
+
+</body>
+</html>

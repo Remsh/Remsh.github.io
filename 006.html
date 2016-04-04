@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>使用d3.js生成页面的dom元素的树状图</title>
+    <script type="text/javascript" src="scripts/shCore.js"></script>
+    <script type="text/javascript" src="scripts/shBrushJScript.js"></script>
+    <script type="text/javascript" src="scripts/shBrushCss.js"></script>
+    <link type="text/css" rel="stylesheet" href="styles/shcommon.css"/>
+    <script type="text/javascript">SyntaxHighlighter.all();</script>
+</head>
+<body>
+<link rel="stylesheet" type="text/css" href="normalize.css"/>
+
+<style type="text/css">
+
+    .header {
+        position: fixed;
+        z-index: 9;
+        background-color: #fff;
+        width: 100%;
+        top: 0;
+        display: block;
+        height: 35px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+    }
+
+    ol{
+        left: 900px;
+        top:280px;
+        z-index: 18;
+    }
+    .aside {
+        top: 45px;
+        display: block;
+        background-color: rgba(173, 218, 255, 0.16);
+        position: fixed;
+        z-index: 2;
+        width: 255px;
+        padding-left: 0px;
+        bottom: 30px;
+    }
+    .main {
+        padding: 10px 10px;
+        width: 670px;
+        background-color: rgba(104, 216, 255, 0.13);
+        position: relative;
+        left: 315px;
+        top: 50px;
+    }
+
+    .footer {
+        z-index: 8;
+        width: 100%;
+        font-size: 14px;
+        color: #333;
+        padding-top: 30px;
+    }
+    .li1 {
+        float: left;
+        display: block;
+        position: relative;
+        list-style: none;
+    }
+
+    a:link {
+        padding-left: 0;
+        padding-right: 0;
+        padding-top: 10px;
+        padding-bottom: 20px;
+        line-height: 20px;
+        text-decoration: none;
+        color: #333;
+    }
+
+    @media screen and (max-width: 1150px) { /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
+        .rightdiv {
+            display: none;
+        }
+    }
+
+
+    a .text {
+        padding-left: 15px;
+        border-left: 1px solid #e1e6eb;
+        border-right: 1px solid #e1e6eb;
+        text-decoration: none;
+    }
+
+    span.text {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+    .logo {
+        margin-left:0;
+        background-color: #5bc0de;
+    }
+    .li2 {
+
+        position: relative;
+        text-align: -webkit-match-parent;
+        list-style: none;
+        display: block;
+    }
+    .link2 {
+        font-size: 20px;
+        position: relative;
+        display: block;
+        list-style: none;
+        margin-bottom: 0;
+    }
+    .weixin-drop {
+        display: none;
+        position: fixed;
+        left: 140px;
+        top: 460px;
+        border: 1px solid #e6e6e6;
+        background: #FFF;
+        z-index: 18;
+        height: 170px;
+        width: 170px;
+        padding: 13px 13px 13px 13px;
+    }
+
+
+    .navbar-left:hover div.weixin-drop {
+        display: block;
+    }
+    ul.navbar-left{
+        margin-left: 10px;
+        padding-left: 25px;
+        padding-right: 30px;
+    }
+    ul.navbar-top{
+        padding: 5px;
+    }
+    *{margin:0;padding:0;list-style:none;}
+    #flash{width: 530px;height: 354px;margin:50px 5px;position: relative;cursor: pointer;}
+    #pic li{position: absolute;top: 0;left: 0;z-index: 1;display: none;}
+    #num{position: absolute;left: 40%;bottom: 10px;z-index: 2;cursor:default;}
+    #num li{float: left;width: 20px;height: 20px;border-radius: 50%;background: #666;margin: 3px;line-height: 20px;text-align: center;color: #fff;cursor: pointer;}
+    #num li.active{background: #f00;}
+    .arrow{height: 60px;width: 30px;line-height: 60px;text-align: center;display: block;position: absolute;top:45%;background-color: rgba(0,0,0,0.3);z-index: 3;display: none;}
+    .arrow:hover{background: rgba(0,0,0,0.7);}
+    #flash:hover .arrow{display: block;}
+    #left{left: 2%;}
+    #right{right: 2%;}
+
+
+
+    .row{
+        display: block;
+        padding-left: 64px;
+        height: 36px;
+    } .label{
+          position: absolute;
+          margin-left: -64px;
+          line-height: 30px;
+          font-size: 13px;
+          color: #333;
+          font-family: "Microsoft Yahei";
+      } .label.smcodetitle{
+            margin-left: -77px;
+        } .collection{
+              position: relative;
+              height: 36px;
+          } .collection input{
+                margin: 0;
+                border: solid 1px #cdcdcd;
+                padding: 6px;
+                width: 182px;
+                height: 16px;
+                line-height: 16px;
+                color: #999;
+                border-radius: 3px;
+            }
+    .mobileValidateCode input{
+        width: 76px;
+    } .getMobileValidateCode{
+          position: absolute;
+          margin-left: 96px;
+          width: 100px;
+          height: 30px;
+          line-height: 30px;
+          text-align: center;
+          background-color: #933;
+          color: #fff;
+          border: none;
+          border-radius: 3px;
+          cursor: pointer;
+          font-style: normal;
+      }
+    .inputDefault, .msgContainer{
+        position: absolute;
+        top: 0;
+        left: 0;
+    } .collection .inputDefault, .collection {
+          color: #000;
+      } .collection .msgError{
+            border-color: #f00;
+            color: #f00;
+        }
+    #captchaDiv{
+        float: left;
+        width: 76px;
+        margin-right: 10px;
+    } #captchaDiv input{
+          width: 60px;
+      } .captchaimg{
+            float: left;
+            margin-right: 10px;
+        } .captchaimg .cptimg{
+              cursor: pointer;
+          }
+    .collection {
+        width: 76px;
+    } .verifyCode{
+          position: absolute;
+          right: 20px;
+          top: 4px;
+      }
+
+    } .agree input{
+          margin: 0;
+          vertical-align: middle;
+      } .agree a{
+            color: #ff5656;
+            text-decoration: none;
+        }
+
+</style>
+
+<div class="header">
+    <ul class="nav navbar-top">
+        <li class="li1"><a class="link" href="javascript:void(0)"><span class="text"></span>首页</a></li>
+        <li class="li1"><a class="link" href="javascript:void(0)"><span class="text">css</span></a></li>
+        <li class="li1"><a class="link" href="javascript:void(0)"><span class="text">Javascript</span></a></li>
+        <li class="li1"><a class="link" href="javascript:void(0)"><span class="text">日历</span></a></li>
+    </ul>
+</div>
+
+
+<div class="aside">
+    <h1 class="logo"><img src="img/logo.gif" width="150" height="250" alt="素还真"></h1>
+    <ul class="nav navbar-left">
+        <li class="li2"><a class="link2" href="javascript:void(0)">关于</a></li>
+        <li class="li2"><a class="link2" href="javascript:void(0)">统计</a></li>
+        <li class="li2"><a class="link2" href="javascript:void(0)">留言</a></li>
+        <li class="li2"><b id="weixin" class="link2" href="javascript:void(0)">微信</b>
+            <div class="weixin-drop">
+                <img height="160px" width="160px" alt="" class="hover-qrcode" src="img/hover-qrcode.png">
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div class="main">
+    <div class="left">
+        <h1 class="heading">
+            使用d3.js生成页面的dom元素的树状图
+        </h1>
+
+
+
+    </div>
+    <div style="clear: both">
+    </div>
+
+    <div class="body textStyle">
+        <p>看网页元素的结构，一般手熟了以后用调试工具就可以了解大概。当然，如果使用webstrom，按Ctrl+F12，也可以调出和下面差不多的结构图：
+            　　</p>
+        <p style="text-align: center">
+            <img alt="" src="img/vgewhgwhw.png"></p>
+        <p>
+            本文讨论的是用d3.js画出dom树状图的方法。
+            因为d3的数据输入格式为json，所有先做出一个json格式的dom对象。可以用这段代码：
+        </p>
+         <pre class="brush: js;">
+
+               function forEach(arr, callback) {
+               var i = 0,
+               len = arr.length;
+               while (i < len) {
+               callback(arr[i], i);
+               i++;
+               }
+               }
+
+               String.prototype.trim && (String.prototype.trim = function () {
+               return this.replace(/(^\s+)|(\s+$)/g, '');
+               });
+
+               var tree = {};
+
+               (function find(ele, _tree) {
+               _tree.name = ele.tagName;
+               var children = [];
+               forEach(ele.children, function (item, index) {
+               if (item.children.length > 0) {
+               children.push({});
+               find(item, children[index]);
+               } else {
+               var className = (item.className || '').trim().replace(/\s+/g, '.').replace(/(.+)/, '.$1');
+               var id = item.id.trim().replace(/(.+)/, '#$1');
+               children.push({
+               name : item.tagName + id + className
+               });
+               }
+               });
+               if (children.length > 0) {
+               _tree.children = children;
+               }
+
+               })(document.documentElement, tree);
+
+               console.log(JSON.stringify(tree));
+
+            </pre>   　　
+
+
+        <p>
+            　以知乎首页为例，打开chrome控制台，进入console，粘贴这段代码，回车。
+            屏幕会返回一个json对象，复制到文件里，命名为zhihu.json。</p>
+        <p>
+            然后利用前人的成果就可以啦，下载模版http://www.ourd3js.com/src/rm/rm94.zip。解压，将zhihu.json移入，9.4.cluster.html中“city.json”字样改为“zhihu.json”。
+            使用firefox（chrome和ie不能加载本地json）打开网页，便可以看到效果图了：</p>
+
+        <p style="text-align: center">
+            <img alt="" src="img/60404164756.png"></p>
+
+    </div>
+
+
+
+    <div style="clear: both">
+    </div>
+    <div style="text-align: center; margin-top: 6px;">
+    </div>
+
+
+</div>
+</div>
+<style type="text/css">
+    .article-title {
+        padding: 10;
+        color: #000;
+        font-size: 26px;
+        font-weight: 700;
+        line-height: 1.5em;
+        padding-top:30px;
+        margin-bottom: 30px;
+        border-bottom: 1px dashed rgba(70, 92, 54, 0.39);
+        margin-before:0；
+    }
+    .main  p {
+        margin-top: 0px;
+        margin-bottom: 30px;
+        padding: 0;
+        font-size: 16px;
+        line-height: 1.75em;
+        font-family: Tahoma,"Microsoft YaHei","Hiragino Sans GB","WenQuanYi Micro Hei",sans-serif;
+    }
+
+    .main  a {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        padding: 0;
+        font-size: 15px;
+        line-height: 1.75em;
+        font-family: Tahoma,"Microsoft YaHei","Hiragino Sans GB","WenQuanYi Micro Hei",sans-serif;
+    }
+</style>
+
+
+
+<div class="footer"></div>
+
+</body>
+</html>

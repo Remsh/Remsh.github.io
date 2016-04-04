@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<link rel="stylesheet" type="text/css" href="normalize.css"/>
+
+<style type="text/css">
+    .header {
+        position: fixed;
+        z-index: 9;
+        background-color: #fff;
+        width: 100%;
+        top: 0;
+        display: block;
+        height: 35px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+    }
+
+    .pic_area {
+        position: relative;
+        margin-left: 5px;
+        margin-right: 15px;
+        height: 320px;
+        width: 40%;
+        margin-bottom: 20px;
+        background-color: #ff9010;
+        display: block;
+        left: 305px;
+    }
+
+    ol {
+        left: 900px;
+        top: 280px;
+        z-index: 18;
+    }
+
+    .aside {
+        top: 45px;
+        display: block;
+        background-color: rgba(173, 218, 255, 0.16);
+        position: fixed;
+        z-index: 2;
+        width: 255px;
+        padding-left: 0px;
+        bottom: 30px;
+    }
+
+    .main {
+        float: left;
+        padding: 10px 10px;
+        width: 670px;
+        height: 1500px;
+        background-color: rgba(104, 216, 255, 0.13);
+        position: relative;
+        left: 315px;
+        top: 50px;
+    }
+
+    .titleline{
+        margin:20px,0;
+        display: block;
+        background-color: transparent;
+    }
+    .rightdiv {
+        top: 35px;
+        right: 25px;
+        display: block;
+        background-color: #0a6608;
+        position: fixed;
+        z-index: 2;
+        width: 255px;
+        padding-right: 15px;
+        bottom: 30px;
+        margin-right: 15px;
+    }
+
+    .footer {
+        z-index: 8;
+        width: 100%;
+        font-size: 14px;
+        color: #333;
+        padding-top: 30px;
+    }
+
+    .li1 {
+        float: left;
+        display: block;
+        position: relative;
+        list-style: none;
+    }
+
+    a:link {
+        padding-left: 0;
+        padding-right: 0;
+        padding-top: 10px;
+        padding-bottom: 20px;
+        line-height: 20px;
+        text-decoration: none;
+        color: #333;
+    }
+
+    a .text {
+        padding-left: 15px;
+        border-left: 1px solid #e1e6eb;
+        border-right: 1px solid #e1e6eb;
+        text-decoration: none;
+    }
+
+    span.text {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+
+    .logo {
+        margin-left: 0;
+        background-color: #5bc0de;
+    }
+
+    .li2 {
+
+        position: relative;
+        text-align: -webkit-match-parent;
+        list-style: none;
+        display: block;
+    }
+
+    .link2 {
+        font-size: 20px;
+        position: relative;
+        display: block;
+        list-style: none;
+        margin-bottom: 0;
+    }
+
+    .weixin-drop {
+        display: none;
+        position: fixed;
+        left: 140px;
+        top: 460px;
+        border: 1px solid #e6e6e6;
+        background: #FFF;
+        z-index: 18;
+        height: 170px;
+        width: 170px;
+        padding: 13px 13px 13px 13px;
+    }
+
+    .rtop {
+        display: block;
+        position: relative;
+        border: 1px solid #e6e6e6;
+        background: #2526ff;
+        z-index: 10;
+        height: 170px;
+        width: 320px;
+        padding: 13px 13px 13px 13px;
+        font-size: 40px;
+    }
+
+    .navbar-left:hover div.weixin-drop {
+        display: block;
+    }
+
+    ul.navbar-left {
+        margin-left: 10px;
+        padding-left: 25px;
+        padding-right: 30px;
+    }
+
+    ul.navbar-top {
+        padding: 5px;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    #flash {
+        width: 530px;
+        height: 354px;
+        margin: 50px auto;
+        position: relative;
+        cursor: pointer;
+    }
+
+    #pic li {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        display: none;
+    }
+
+    #num {
+        position: absolute;
+        left: 40%;
+        bottom: 10px;
+        z-index: 2;
+        cursor: default;
+    }
+
+    #num li {
+        float: left;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #666;
+        margin: 3px;
+        line-height: 20px;
+        text-align: center;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    #num li.active {
+        background: #f00;
+    }
+
+    .arrow {
+        height: 60px;
+        width: 30px;
+        line-height: 60px;
+        text-align: center;
+        display: block;
+        position: absolute;
+        top: 45%;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 3;
+        display: none;
+    }
+
+    .arrow:hover {
+        background: rgba(0, 0, 0, 0.7);
+    }
+
+    #flash:hover .arrow {
+        display: block;
+    }
+
+    #left {
+        left: 2%;
+    }
+
+    #right {
+        right: 2%;
+    }
+
+    .card .back {
+        transition: transform 400ms;
+        transform-style: preserve-3d;
+        backface-visibility: hidden;
+        position: absolute;
+        transform: rotateY(-180deg);
+        margin-top: -5px;
+    }
+
+    .card:hover .back {
+        transform: rotateY(0deg);
+    }
+
+    .card:hover .font {
+        -webkit-transform: rotateY(180deg);
+        -moz-transform: rotateY(180deg);
+        -o-transform: rotateY(180deg);
+        transform: rotateY(180deg);
+
+    }
+
+    .card .font {
+        transition: transform 400ms;
+        -webkit-transform-style: preserve-3d;
+        -moz-transform-style: preserve-3d;
+        -o-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        -o-backface-visibility: hidden;
+        backface-visibility: hidden;
+        position: absolute;
+        margin-top: -5px;
+
+        -webkit-transform: rotateY(0deg);
+        -moz-transform: rotateY(0deg);
+        -o-transform: rotateY(0deg);
+        transform: rotateY(0deg);
+    }
+
+    div.card {
+        width: 788px;
+        height: auto;
+        overflow: hidden;
+    }
+
+    .card a {
+        margin: 0 0;
+        padding: 0 0;;
+    }
+
+    .reg-box {
+        position: relative;
+        margin-top: 150px;
+    }
+
+
+    .row{
+        display: block;
+        padding-left: 64px;
+        height: 36px;
+    } .label{
+          position: absolute;
+          margin-left: -64px;
+          line-height: 30px;
+          font-size: 13px;
+          color: #333;
+          font-family: "Microsoft Yahei";
+      } .label.smcodetitle{
+            margin-left: -77px;
+        } .collection{
+              position: relative;
+              height: 36px;
+          } .collection input{
+                margin: 0;
+                border: solid 1px #cdcdcd;
+                padding: 6px;
+                width: 182px;
+                height: 16px;
+                line-height: 16px;
+                color: #999;
+                border-radius: 3px;
+            }
+    .mobileValidateCode input{
+        width: 76px;
+    } .getMobileValidateCode{
+          position: absolute;
+          margin-left: 96px;
+          width: 100px;
+          height: 30px;
+          line-height: 30px;
+          text-align: center;
+          background-color: #933;
+          color: #fff;
+          border: none;
+          border-radius: 3px;
+          cursor: pointer;
+          font-style: normal;
+      }
+    .inputDefault, .msgContainer{
+        position: absolute;
+        top: 0;
+        left: 0;
+    } .collection .inputDefault, .collection {
+          color: #000;
+      } .collection .msgError{
+            border-color: #f00;
+            color: #f00;
+        }
+    #captchaDiv{
+        float: left;
+        width: 76px;
+        margin-right: 10px;
+    } #captchaDiv input{
+          width: 60px;
+      } .captchaimg{
+            float: left;
+            margin-right: 10px;
+        } .captchaimg .cptimg{
+              cursor: pointer;
+          }
+    .collection {
+        width: 76px;
+    } .verifyCode{
+          position: absolute;
+          right: 20px;
+          top: 4px;
+      }
+
+    } .agree input{
+          margin: 0;
+          vertical-align: middle;
+      } .agree a{
+            color: #ff5656;
+            text-decoration: none;
+        }
+
+</style>
+
+<script type="text/javascript">
+    function $(id) {
+        return typeof id === 'string' ? document.getElementById(id) : id;
+    }
+    window.onload = function () {
+        var index = 0;
+        var timer = null;
+        var pic = $("pic").getElementsByTagName("li");
+        var num = $("num").getElementsByTagName("li");
+        var flash = $("flash");
+        var left = $("left");
+        var right = $("right");
+        //单击左箭头
+        left.onclick = function () {
+            index--;
+            if (index < 0) {
+                index = num.length - 1
+            }
+            ;
+            changeOption(index);
+        }
+        //单击右箭头
+        right.onclick = function () {
+            index++;
+            if (index >= num.length) {
+                index = 0
+            }
+            ;
+            changeOption(index);
+        }
+        //鼠标划在窗口上面，停止计时器
+        flash.onmouseover = function () {
+            clearInterval(timer);
+        }
+        //鼠标离开窗口，开启计时器
+        flash.onmouseout = function () {
+            timer = setInterval(run, 2000)
+        }
+        //鼠标划在页签上面，停止计时器，手动切换
+        for (var i = 0; i < num.length; i++) {
+            num[i].id = i;
+            num[i].onmouseover = function () {
+                clearInterval(timer);
+                changeOption(this.id);
+            }
+        }
+        //定义计时器
+        timer = setInterval(run, 2000)
+        //封装函数run
+        function run() {
+            index++;
+            if (index >= num.length) {
+                index = 0
+            }
+            ;
+            changeOption(index);
+        }
+
+        //封装函数changeOption
+        function changeOption(curindex) {
+            console.log(index)
+            for (var j = 0; j < num.length; j++) {
+                pic[j].style.display = "none";
+                num[j].className = "";
+            }
+            pic[curindex].style.display = "block";
+            num[curindex].className = "active";
+            index = curindex;
+        }
+    }
+</script>
+<div class="header">
+    <ul class="nav navbar-top">
+        <li class="li1"><a class="link" href="javascript:void(0)"><span class="text"></span>首页</a></li>
+        <li class="li1"><a class="link" href="javascript:void(0)"><span class="text">css</span></a></li>
+        <li class="li1"><a class="link" href="javascript:void(0)"><span class="text">Javascript</span></a></li>
+        <li class="li1"><a class="link" href="javascript:void(0)"><span class="text">日历</span></a></li>
+    </ul>
+</div>
+
+
+<div class="aside">
+    <h1 class="logo"><img src="img/logo.gif" width="150" height="250" alt="素还真"></h1>
+    <ul class="nav navbar-left">
+        <li class="li2"><a class="link2" href="javascript:void(0)">关于</a></li>
+        <li class="li2"><a class="link2" href="javascript:void(0)">统计</a></li>
+        <li class="li2"><a class="link2" href="javascript:void(0)">留言</a></li>
+        <li class="li2"><b id="weixin" class="link2" href="javascript:void(0)">微信</b>
+            <div class="weixin-drop">
+                <img height="160px" width="160px" alt="" class="hover-qrcode" src="img/hover-qrcode.png">
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div class="main">
+    <article>
+        <h1 class="article-title">用ajax完成表格的简单提交</h1>
+
+        <p>提交表单的方法很多，用ajax，将input参数逐个传递到Data中，是很常用的办法，代码如下:</p>
+        <div class="code1">
+        <pre>
+
+
+            $.ajax({
+            type: "POST",
+            url: "some.php",
+            data: "name=John&location=Boston",
+            success: function(msg){
+            alert( "Data Saved: " + msg );
+   }
+});
+        </pre>
+        </div>
+        <p>提交form表单时，可以使用map方法，遍历求得每个input的value值，赋予data。以下面这个表单为例。</p>
+
+        <form id="Form1" name="Form1" method="post" >
+            <div class="row"><label class="label" >地址</label>
+                <div class="collection">
+                    <input type="text" id="username" name="addr" class="disableIme inputDefault" maxlength="25" autocomplete="off" tabindex="1" placeholder="提示信息">
+
+                </div>
+            </div>
+            <div class="row"><label class="label" >客户</label>
+                <div class="collection"><input type="password" id="password" name="nameinfo" class="disableIme inputDefault" maxlength="20" tabindex="2" placeholder="提示信息">
+
+                </div>
+            </div>
+            <div class="row"><label class="label" >电话</label>
+                <div class="collection"><input type="password" id="confirmPassword" name="number" class="disableIme inputDefault" maxlength="20" tabindex="3" placeholder="提示信息">
+
+                </div>
+            </div>
+            <div class="row"><label class="label" >微信</label>
+                <div class="collection"><input type="text" id="realname" name="wechat" class="inputDefault" maxlength="5" tabindex="4" placeholder="提示信息">
+                </div>
+            </div>
+            <div class="row"><label class="label">行业</label>
+                <div class="collection"><input type="text" id="identity" name="beyond" class="disableIme inputDefault" maxlength="18" tabindex="5" placeholder="提示信息">
+                </div>
+            </div>
+            <div class="row"><label class="label">手机号码</label>
+                <div class="collection"><input type="text" id="mobile" name="mobile" class="disableIme inputDefault" maxlength="11" tabindex="6" placeholder="提示信息">
+                </div>
+            </div>
+            <div class="row clearfix"><label class="label">验证码：</label>
+                <div class="collection" id="captchaDiv"><input type="text" id="captcha" name="captcha" class="disableIme inputDefault" maxlength="6" tabindex="5" placeholder="提示信息">
+                </div>
+                <div class="captchaimg"><img src="http://www.zhihu.com/captcha.gif?" width=120" height="30"alt="点击刷新验证码" title="点击刷新验证码" class="cptimg"></div>
+        </form>
+        <p><button onClick="javascript:mysub()" >提交</button></p>
+        <p>(该表的代码请看源文件)</p>
+
+        <p>如果要你每个input都单个写的话,是不是要吐血?所以用这个办法，js代码如下:</p>
+        <div class="code1">
+        <pre>
+
+            var str_data=$("#dlg_form input").map(function(){
+                return ($(this).attr("name")+'='+$(this).val());
+            }).get().join("&") ;
+            alert(data);
+        </pre>
+        </div>
+        <p>alert一下,你会发现,这里面的架构就是divname=xxx&divname2=xxxx等等。将这个与ajax联合一起，便形成了我们的最终
+        代码：</p>
+        <div class="code1">
+        <pre>
+        $.ajax({
+        var str_data=$("#dlg_form input").map(function(){
+        return ($(this).attr("name")+'='+$(this).val());
+            }).get().join("&") ;
+        type: "POST",
+        url: "some.php",
+        data: str_data,
+        success: function(msg){
+     alert( "Data Saved: " + msg );
+   }
+});
+        </pre>
+        </div>
+        <p> </p>
+        <p> </p>
+
+    </article>
+</div>
+<style type="text/css">
+    .article-title {
+        padding: 10;
+        color: #000;
+        font-size: 26px;
+        font-weight: 700;
+        line-height: 1.5em;
+        padding-top:30px;
+        margin-bottom: 30px;
+        border-bottom: 1px dashed rgba(70, 92, 54, 0.39);
+        margin-before:0；
+    }
+
+   .code1 {
+
+        border: 1px solid rgba(22, 42, 25, 0.96);
+        color: #333333;
+        display: block;
+        font-size: 12px;
+        line-height: 120%;
+        margin: 5px 0 0 0;
+        overflow: auto;
+        padding: 0 10px 10px ;
+        width: 90%;
+    }
+     .main  p {
+        margin-top: 5px;
+        margin-bottom: 25px;
+        padding: 0;
+        font-size: 16px;
+        line-height: 1.75em;
+        font-family: Tahoma,"Microsoft YaHei","Hiragino Sans GB","WenQuanYi Micro Hei",sans-serif;
+    }
+
+</style>
+
+
+
+<div class="footer"></div>
+
+</body>
+</html>
