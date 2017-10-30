@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>使用Python Selenium 在chrome headless模式下抓取阿里RFQ信息</title>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="handlebars-v4.0.5.js"></script>
+    <script type="text/javascript" src="scripts/shCore.js"></script>
+    <script type="text/javascript" src="scripts/shBrushJScript.js"></script>
+    <script type="text/javascript" src="scripts/shBrushCss.js"></script>
+    <link type="text/css" rel="stylesheet" href="styles/shcommon.css"/>
+    <script type="text/javascript">SyntaxHighlighter.all();</script>
+
+
+</head>
+<body>
+<link rel="stylesheet" type="text/css" href="normalize.css"/>
+
+<style type="text/css">
+
+    .header {
+        position: fixed;
+        z-index: 9;
+        background-color: #fff;
+        width: 100%;
+        top: 0;
+        display: block;
+        height: 35px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+    }
+
+    ol{
+        left: 900px;
+        top:280px;
+        z-index: 18;
+    }
+    .aside {
+        top: 45px;
+        display: block;
+        background-color: rgba(173, 218, 255, 0.16);
+        position: fixed;
+        z-index: 2;
+        width: 255px;
+        padding-left: 0px;
+        bottom: 30px;
+    }
+    .main {
+        padding: 10px 10px;
+        width: 670px;
+        background-color: rgba(104, 216, 255, 0.13);
+        position: relative;
+        left: 315px;
+        top: 50px;
+    }
+
+    .footer {
+        z-index: 8;
+        width: 100%;
+        font-size: 14px;
+        color: #333;
+        padding-top: 30px;
+    }
+    .li1 {
+        float: left;
+        display: block;
+        position: relative;
+        list-style: none;
+    }
+
+    a:link {
+        padding-left: 0;
+        padding-right: 0;
+        padding-top: 10px;
+        padding-bottom: 20px;
+        line-height: 20px;
+        text-decoration: none;
+        color: #333;
+    }
+
+    @media screen and (max-width: 1150px) { /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
+        .rightdiv {
+            display: none;
+        }
+    }
+
+
+    a .text {
+        padding-left: 15px;
+        border-left: 1px solid #e1e6eb;
+        border-right: 1px solid #e1e6eb;
+        text-decoration: none;
+    }
+
+    span.text {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+    .logo {
+        margin-left:0;
+        background-color: #5bc0de;
+    }
+    .li2 {
+
+        position: relative;
+        text-align: -webkit-match-parent;
+        list-style: none;
+        display: block;
+    }
+    .link2 {
+        font-size: 20px;
+        position: relative;
+        display: block;
+        list-style: none;
+        margin-bottom: 0;
+    }
+    .weixin-drop {
+        display: none;
+        position: fixed;
+        left: 140px;
+        top: 460px;
+        border: 1px solid #e6e6e6;
+        background: #FFF;
+        z-index: 18;
+        height: 170px;
+        width: 170px;
+        padding: 13px 13px 13px 13px;
+    }
+
+
+    .navbar-left:hover div.weixin-drop {
+        display: block;
+    }
+    ul.navbar-left{
+        margin-left: 10px;
+        padding-left: 25px;
+        padding-right: 30px;
+    }
+    ul.navbar-top{
+        padding: 5px;
+    }
+    *{margin:0;padding:0;list-style:none;}
+    #flash{width: 530px;height: 354px;margin:50px 5px;position: relative;cursor: pointer;}
+    #pic li{position: absolute;top: 0;left: 0;z-index: 1;display: none;}
+    #num{position: absolute;left: 40%;bottom: 10px;z-index: 2;cursor:default;}
+    #num li{float: left;width: 20px;height: 20px;border-radius: 50%;background: #666;margin: 3px;line-height: 20px;text-align: center;color: #fff;cursor: pointer;}
+    #num li.active{background: #f00;}
+    .arrow{height: 60px;width: 30px;line-height: 60px;text-align: center;display: block;position: absolute;top:45%;background-color: rgba(0,0,0,0.3);z-index: 3;display: none;}
+    .arrow:hover{background: rgba(0,0,0,0.7);}
+    #flash:hover .arrow{display: block;}
+    #left{left: 2%;}
+    #right{right: 2%;}
+
+
+
+    .row{
+        display: block;
+        padding-left: 64px;
+        height: 36px;
+    } .label{
+          position: absolute;
+          margin-left: -64px;
+          line-height: 30px;
+          font-size: 13px;
+          color: #333;
+          font-family: "Microsoft Yahei";
+      } .label.smcodetitle{
+            margin-left: -77px;
+        } .collection{
+              position: relative;
+              height: 36px;
+          } .collection input{
+                margin: 0;
+                border: solid 1px #cdcdcd;
+                padding: 6px;
+                width: 182px;
+                height: 16px;
+                line-height: 16px;
+                color: #999;
+                border-radius: 3px;
+            }
+    .mobileValidateCode input{
+        width: 76px;
+    } .getMobileValidateCode{
+          position: absolute;
+          margin-left: 96px;
+          width: 100px;
+          height: 30px;
+          line-height: 30px;
+          text-align: center;
+          background-color: #933;
+          color: #fff;
+          border: none;
+          border-radius: 3px;
+          cursor: pointer;
+          font-style: normal;
+      }
+    .inputDefault, .msgContainer{
+        position: absolute;
+        top: 0;
+        left: 0;
+    } .collection .inputDefault, .collection {
+          color: #000;
+      } .collection .msgError{
+            border-color: #f00;
+            color: #f00;
+        }
+    #captchaDiv{
+        float: left;
+        width: 76px;
+        margin-right: 10px;
+    } #captchaDiv input{
+          width: 60px;
+      } .captchaimg{
+            float: left;
+            margin-right: 10px;
+        } .captchaimg .cptimg{
+              cursor: pointer;
+          }
+    .collection {
+        width: 76px;
+    } .verifyCode{
+          position: absolute;
+          right: 20px;
+          top: 4px;
+      }
+
+    } .agree input{
+          margin: 0;
+          vertical-align: middle;
+      } .agree a{
+            color: #ff5656;
+            text-decoration: none;
+        }
+
+</style>
+
+<div class="header">
+    <ul class="nav navbar-top">
+        <li class="li1"><a class="link" href="http://remsh.github.io/"><span class="text"></span>首页</a></li>
+        <li class="li1"><a class="link" href="javascript:void(0)"><span class="text">css</span></a></li>
+        <li class="li1"><a class="link" href="javascript:void(0)"><span class="text">Javascript</span></a></li>
+        <li class="li1"><a class="link" href="javascript:void(0)"><span class="text">日历</span></a></li>
+    </ul>
+</div>
+
+
+<div class="aside">
+    <h1 class="logo"><img src="img/logo.gif" width="150" height="250" alt="素还真"></h1>
+    <ul class="nav navbar-left">
+        <li class="li2"><a class="link2" href="javascript:void(0)">关于</a></li>
+        <li class="li2"><a class="link2" href="javascript:void(0)">统计</a></li>
+        <li class="li2"><a class="link2" href="javascript:void(0)">留言</a></li>
+        <li class="li2"><b id="weixin" class="link2" href="javascript:void(0)">微信</b>
+            <div class="weixin-drop">
+                <img height="160px" width="160px" alt="" class="hover-qrcode" src="img/hover-qrcode.png">
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div class="main">
+    <article>
+        <h1 class="article-title">使用Python Selenium 在chrome headless模式下抓取阿里RFQ信息</h1>
+
+        <p>
+            Python借deep learning之势一下子更强大了。
+			使用node和puppeteer抓取有些地方不是很理想，换selenium和Python这套更成熟的方案
+			
+        </p>
+         <p><b>一、 简要流程图</b><br />
+            <img src="img/LIUc.png">
+		</p>
+
+		 
+
+        <p>	初始化：</p>
+        
+		<pre class="brush: js;">
+				# -*- coding: UTF-8 -*-
+				PYTHONIOENCODING="utf-8"
+
+				import sys
+				from selenium import webdriver
+				from selenium.webdriver.common.by import By
+				from selenium.common.exceptions import TimeoutException
+				from selenium.webdriver.support.ui import WebDriverWait
+				from selenium.webdriver.support import expected_conditions as EC
+				import time
+				import csv
+				from selenium.webdriver.chrome.options import Options
+
+
+				chrome_options = Options()
+				chrome_options.add_argument("--log-level=3")
+				chrome_options.add_argument("--disable-gpu")
+				chrome_options.add_argument("--headless")	
+				chrome_options.add_argument("--window-size=1000x1024")
+					
+				driver = webdriver.Chrome(chrome_options=chrome_options)
+
+
+				driver.get("https://sourcing.alibaba.com")
+
+
+
+				#搜索词
+				keywords=["led light","iphone","xiaomi"]
+
+
+
+				driver.find_element_by_xpath("//*[@id='header2012']/div[1]/div/div/a[1]").click() 
+
+				driver.switch_to.frame('alibaba-login-box')
+         </pre>
+		 
+		 
+        <p>	模拟登陆：</p>
+        
+		<pre class="brush: js;">
+				#做个登陆方法
+				def login(user,pwd):
+					driver.find_element_by_id("fm-login-id").clear() 
+					driver.find_element_by_id("fm-login-id").send_keys(user)
+					time.sleep(1)
+					
+					driver.find_element_by_id("fm-login-password").clear() 
+					driver.find_element_by_id("fm-login-password").send_keys(pwd) 
+					time.sleep(1.1)
+					
+					driver.find_element_by_id("fm-login-submit").click() 
+					time.sleep(1)
+         </pre>
+
+
+        <p>	搜索关键字：</p>
+        
+		<pre class="brush: js;">
+				#做个搜索方法
+				def search_main(kw):
+					time.sleep(5)
+					js="var q=document.documentElement.scrollTop=100"
+					driver.execute_script(js)
+					time.sleep(1)
+
+					driver.find_element_by_xpath("//*[@id='rfq-supplier-home-searchbar']/div/form/div[2]/input").send_keys(kw)
+					time.sleep(0.2)
+
+					driver.find_element_by_xpath("//*[@id='rfq-supplier-home-searchbar']/div/form/input[4]").click()
+					
+				#调用搜索方法
+				for i in keywords:
+					kw = i
+					print("=========开始搜索==========")
+					driver.get("https://sourcing.alibaba.com")
+					time.sleep(1)
+					search_main(kw)
+					time.sleep(1)
+					print("=========打印关键词：",str(i),"==========")
+					openNewPages()
+					
+         </pre>
+ 
+         <p>	遍历搜索结果：</p>
+        
+		<pre class="brush: js;">
+				#观察搜索结果的总页面数
+				def openNewPages():
+					url = driver.current_url
+					time.sleep(0.5)
+					#消除遮挡
+					try:
+						driver.find_element_by_xpath("/html/body/div[7]/a[1]").click()
+						time.sleep(0.1)
+						
+					except:
+						try:
+							driver.find_element_by_xpath("/html/body/div[6]/a[1]").click()
+							time.sleep(0.1)
+						except:
+							pass
+					else:
+						pass
+
+
+					driver.find_element_by_xpath("/html/body/div[2]/div/div[3]/div[1]/div[2]/a[2]").click()
+					print("========打开最近1天页面=======")
+					time.sleep(1)
+						
+					try:
+						elems2 = driver.find_elements_by_xpath("//*[@id='pagination-example']/a")
+						print("=============找到的页标签数: ",len(elems2))
+
+						#https://sourcing.alibaba.com/rfq_search_list.htm?fsb=y&IndexArea=rfq_en&CatId=&SearchText=led+light
+						url_pref = url.split('fsb=')[0] + url.split('&')[3] + "&openTime=24h&page=" 
+
+						if len(elems2) == 1:
+							page_quantity= 1
+						else:
+							page_quantity= int(elems2[-2].text)
+							
+						print("=============总页面数: ",page_quantity)
+
+						for x in range(1, page_quantity+1):
+							url_real = url_pref + str(x)
+							#
+							print("=================打印第" + str(x) + "个页面")
+							print("=============url: " + url_real)
+							openPage(url_real)
+						
+					except:
+						pass	
+					
+				#打开每个页面
+					def openPage(url_real):
+
+						driver.get(url_real)
+						
+						elems = driver.find_elements_by_xpath("//*[@id='rfqSearchindex']/div/div/div")
+						#elems = find_elements_by_class_name("alife-bc-brh-rfq-list__row")
+						
+						amount = len(elems)
+						print("=============找到的条目数: ",amount)
+						
+						openTabs(amount)
+					
+         </pre>
+		 
+		 
+		         <p>	打开每个链接：</p>
+        
+		<pre class="brush: js;">
+				#打开详情页
+				def openTab(i):
+
+					scrollTop= 300+185*i
+					js="var q=document.documentElement.scrollTop="+ str(scrollTop)
+					driver.execute_script(js)
+					time.sleep(1)
+					
+					link= "//*[@id='rfqSearchindex']/div/div/div[" + str(i) + "]/div/div/div/div[1]/h1/a"
+					
+					j = 1
+					
+					try:
+						print(driver.find_element_by_xpath(link).get_attribute('href'))
+						
+					except:
+						print("============Error: in open Table===============")
+						j = 2
+						link= "//*[@id='rfqSearchindex']/div/div/div[" + str(i) + "]/div/div/div/div[2]/h1/a"
+						elem = driver.find_element_by_xpath(link)
+					else:
+						elem = driver.find_element_by_xpath(link)
+					
+					link2=elem.get_attribute('href')
+					
+					title_xpath ="//*[@id='rfqSearchindex']/div/div/div[" + str(i) + "]/div/div/div/div[" + str(j)+ "]/h1/a"
+					title= driver.find_element_by_xpath(title_xpath).text
+					print("title: ", title)	
+					
+	
+					
+					date_xpath = "//*[@id='rfqSearchindex']/div/div/div[" +str(i) + "]/div/div/div/div[" + str(j)+ "]/div[2]"
+					date0= driver.find_element_by_xpath(date_xpath).text
+					date = "201" + date0.split('201')[1]	
+					
+					print("date: ", date)
+					
+
+					quantity_xpath ="//*[@id='rfqSearchindex']/div/div/div[" + str(i) + "]/div/div/div/div[" + str(j+1) + "]/div/div[1]/span[2]"
+					quantity= driver.find_element_by_xpath(quantity_xpath).text
+					print("quantity: ", quantity)
+					
+					index = []
+					index.append(date)
+					index.append(title)
+
+							
+					link3 = link2.split('&')[0]
+					href = link3
+					#print("href= ", link3)
+					
+					
+					if index not in links:
+
+					#时间 标题 数量 国家 人名 Trade行为 链接 附件 关键词
+	
+						print("===================不在数据库中，抓取新标签=========================")
+						elem.click()
+
+						driver.switch_to_window(driver.window_handles[-1])
+						scr(date,title,quantity,href);
+					
+					else:
+						pass
+					
+         </pre>
+ 
+		 <p>	最终截图效果：</p>
+             <img src="img/RFQs.png">
+        <br />
+        <br />
+        <br />
+
+
+
+
+
+
+
+    </article>
+</div>
+<style type="text/css">
+    .article-title {
+        padding: 10;
+        color: #000;
+        font-size: 26px;
+        font-weight: 700;
+        line-height: 1.5em;
+        padding-top:30px;
+        margin-bottom: 30px;
+        border-bottom: 1px dashed rgba(70, 92, 54, 0.39);
+        margin-before:0；
+    }
+    .main  p {
+        margin-top: 0px;
+        margin-bottom: 30px;
+        padding: 0;
+        font-size: 16px;
+        line-height: 1.75em;
+        font-family: Tahoma,"Microsoft YaHei","Hiragino Sans GB","WenQuanYi Micro Hei",sans-serif;
+    }
+
+    .main  a {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        padding: 0;
+        font-size: 15px;
+        line-height: 1.75em;
+        font-family: Tahoma,"Microsoft YaHei","Hiragino Sans GB","WenQuanYi Micro Hei",sans-serif;
+    }
+
+</style>
+
+<div class="footer"></div>
+
+</body>
+</html>
